@@ -16,19 +16,28 @@
                 <div>
                     <form>
                         <div>
-                            <input style="width: 350px;" type="text" class="form-control" name="name" placeholder="Full Name (maximum 50 characters, required)" required="required">
+                            <label for="full-name-id">Full Name</label>
+                            <input style="width: 350px;" id= "full-name-id" name= "full-name"type="text" class="form-control" name="name" placeholder="Full Name (maximum 50 characters, required)" required="required">
+                            
                         </div>
                         <div>
-                            <input style="width: 350px;" type="text" class="form-control" name="Address" placeholder="Address 1 (maximum 100 characters, required)" required="required"> 
+                            <label for="address1-id">Address #1</label>
+                            <input style="width: 350px;" id= "address1-id" name= "adress1" type="text" class="form-control" name="Address" placeholder="Address 1 (maximum 100 characters, required)" required="required"> 
+                            
                         </div>
                         <div>
-                            <input style="width: 350px;" type="text" class="form-control" name="Address" placeholder="Address 2 (maximum 100 characters, optional)">
+                            <label for="address2-id">Address #2</label>
+                            <input style="width: 350px;" id= "address2-id" name= "adress2" type="text" class="form-control" name="Address" placeholder="Address 2 (maximum 100 characters, optional)">
+                            
+                        </div>
+                        <div> 
+                            <label for="city-id">City</label>
+                            <input style="width: 350px;" id= "city-id" name= "city" type="text" class="form-control" name="city" placeholder="City (maximum 100 characters, required)" required="required">
+                            
                         </div>
                         <div>
-                            <input style="width: 350px;" type="text" class="form-control" name="city" placeholder="City (maximum 100 characters, required)" required="required">
-                        </div>
-                        <div>
-                            <select name="state" id="state">
+                            <label for="state-id">State</label>
+                            <select name="state" id="state-id">
                                 <option>Select your state (required)</option>
                                 <option value="AL">Alabama</option>
                                 <option value="AK">Alaska</option>
@@ -82,9 +91,12 @@
                                 <option value="WI">Wisconsin</option>
                                 <option value="WY">Wyoming</option>
                             </select>
+                               
                         </div>
                         <div>
-                            <input style="width: 350px;" type="text" class="form-control" name="zipcode" placeholder="Zipcode (9 characters, at least 5 character code required)" required="required">
+                            <label for="zip-id">Zip Code</label>
+                            <input style="width: 350px;" id ="zip-id" name= "zip" type="text" class="form-control" placeholder="Zipcode (9 characters, at least 5 character code required)" pattern="[0-9]*" maxlength="9" minlength="5" size= 10 required="required">
+                            
                         </div>
                         <button>
                             Submit
