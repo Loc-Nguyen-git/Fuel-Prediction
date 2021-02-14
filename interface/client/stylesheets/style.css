@@ -14,3 +14,15 @@
   text-align: center;
   margin-left: 10%;
 }
+
+.center {
+ text-align: center
+}
+
+#state-id{
+  width: 358px;   
+ }
+
+ div{
+  margin-top: 5px
+ }

@@ -12,20 +12,20 @@
 <body>
     <style>
         body{
-            background-image: url('images/theme.png');
+            background-image: url('images/theme.jpg');
             background-repeat: no-repeat;
             background-size: cover;
             background-attachment: fixed;
         }
     </style>
     <div>
-        <img src ="images/logo.png" />
+        <img src ="images/logo.png" class="center"/>
 
     </div>
 
     <div class="login-page">
-        <h2>Login</h2>
-        <div class="form">
+        <h2 class="center">Login</h2>
+        <div class="center">
             <form class = "login-form">
                 <div class = "form-user">
                     <input type="text" class="form-control" name="username" placeholder="Username" required="required">
@@ -33,9 +33,8 @@
                 <div class = "form-password">
                     <input type="password" class="form-control" name="password" placeholder="Password" required="required"> 
                 </div>
-                                  
+                <div><button type="submit" class="Sign-In" onclick = "signin()" >Sign in</button></div>
             </form>
-            <button type="submit" class="Sign-In" onclick = "signin()" >Sign in</button>
             <p class="Not-Register">Don't have an account? <a href="register.html"><u><b>   Register here!   </b></u></a></p>
         
     </div>

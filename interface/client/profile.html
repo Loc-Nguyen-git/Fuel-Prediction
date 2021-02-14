@@ -8,16 +8,16 @@
     </head>
     <body>
         <div>
-            <h1> Profile Management </h1>
+            <h1 class="center"> Profile Management </h1>
         </div>
         <div> 
             <div>
-                <h2>User Information</h2>
+                <h2 class="center">User Information</h2>
                 <div>
-                    <form>
+                    <form class="center">
                         <div>
                             <label for="full-name-id">Full Name:&nbsp;&nbsp;</label>
-                            <input style="width: 350px;" id= "full-name-id" name= "full-name"type="text" class="form-control" name="name" placeholder="maximum 50 characters" maxlength= "50" required="required">
+                            <input style="width: 350px;" id= "full-name-id" name= "full-name"type="text" class="form-control" name="name" placeholder="Full Name (maximum 50 characters, required)" maxlength= "50" required="required">
                             
                         </div>
                         <div>
@@ -97,13 +97,13 @@
                             <label for="zip-id">Zipcode:&emsp;&nbsp;&nbsp;</label>
                             <input style="width: 350px;" id ="zip-id" name= "zip" type="text" class="form-control" placeholder="Zipcode (9 characters, at least 5 character code required)" pattern="[0-9]*" maxlength="9" minlength="5" size= 10 required="required">
                         </div>
-                        <button>
+                        <div><button>
                             Submit
-                        </button>
+                        </button></div>
                     </form>
-                    <form>
+                    <Div><form class="center">
                         <button formaction="fuelQuote.html">Get a Quote</button>
-                    </form>         
+                    </form></Div>      
             </div>
         </div>
     </body>
