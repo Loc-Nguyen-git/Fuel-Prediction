@@ -15,7 +15,7 @@ async function signin() {
             alert("Invalid username or password");
         }
         else {
-            response.redirected("views/profile.html")
+            response.redirected('client/profile.html');
         } 
     } catch (err) {
         console.log(err.message);
