@@ -6,6 +6,16 @@ CREATE TABLE User(
     email varchar(255)
 );
 
+CREATE TABLE profileInfo(
+    user_name varchar(255) PRIMARY KEY,
+    full_name varchar(255),
+    address1 char(255),
+    address2 char(255),
+    city char(255),
+    state char(255),
+    zip int
+);
+
 INSERT INTO User (
     user_name,
     password,
