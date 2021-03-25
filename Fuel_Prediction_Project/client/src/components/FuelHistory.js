@@ -12,7 +12,7 @@ const FuelHistory = () => {
                 <link rel="stylesheet" href="stylesheets/style.css" />
             </head>
             <body>
-            <h1></h1>
+            <h1> </h1>
             <h2 class="center">Fuel Quote History of client1</h2>
             <table class="a">
             <tr>

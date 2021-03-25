@@ -43,22 +43,22 @@ const Profile = ({edit}) => {
                             <form class="center">
                                 <div>
                                     <label for="full-name-id">Full Name:&nbsp;&nbsp;</label>
-                                    <input style={{width: '350px'}} id= "full-name-id" name= "full-name"type="text" class="form-control" name="name" placeholder="Full Name (maximum 50 characters, required)" maxlength= "50" required="required"/>
+                                    <input style={{width: '350px'}} id= "full-name-id" name= "full-name"type="text" class="form-control" placeholder="Full Name (maximum 50 characters, required)" maxlength= "50" required="required"/>
                                     
                                 </div>
                                 <div>
                                     <label for="address1-id">Address #1:&nbsp;</label>
-                                    <input style={{width: '350px'}} id= "address1-id" name= "adress1" type="text" class="form-control" name="address1" placeholder="Address 1 (maximum 100 characters, required)" maxlength= "100" required="required"/> 
+                                    <input style={{width: '350px'}} id= "address1-id" name= "adress1" type="text" class="form-control" placeholder="Address 1 (maximum 100 characters, required)" maxlength= "100" required="required"/> 
                                     
                                 </div>
                                 <div>
                                     <label for="address2-id">Address #2:&nbsp;</label>
-                                    <input style={{width: '350px'}} id= "address2-id" name= "adress2" type="text" class="form-control" name="address2" placeholder="Address 2 (maximum 100 characters, optional)" maxlength= "100"/> 
+                                    <input style={{width: '350px'}} id= "address2-id" name= "adress2" type="text" class="form-control" placeholder="Address 2 (maximum 100 characters, optional)" maxlength= "100"/> 
                                     
                                 </div>
                                 <div> 
                                     <label for="city-id">City:&emsp;&emsp;&emsp;&nbsp;&nbsp;</label>
-                                    <input style={{width: '350px'}} id= "city-id" name= "city" type="text" class="form-control" name="city" placeholder="City (maximum 100 characters, required)" maxlength= "100" required="required"/>
+                                    <input style={{width: '350px'}} id= "city-id" name= "city" type="text" class="form-control" placeholder="City (maximum 100 characters, required)" maxlength= "100" required="required"/>
                                     
                                 </div>
                                 <div>

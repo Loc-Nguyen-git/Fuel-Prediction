@@ -38,7 +38,7 @@ const Register = () => {
                 <title> Fuel Quote Project- Login</title>
                 <link rel="stylesheet" href="stylesheets/style.css" />
             </head>
-            <img src={logo}/>
+            <img src={logo} alt=""/>
             <body>
             <div class="register-page">
                 <h2 class="center">New User</h2>

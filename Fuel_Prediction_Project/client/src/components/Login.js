@@ -38,7 +38,7 @@ const Login = () => {
                 <title> Fuel Quote Project- Login</title>
                 <link rel="stylesheet" href="stylesheets/style.css" />
             </head>
-            <img src={logo}/>
+            <img src={logo} alt=""/>
             <body>
                 <div class="login-page">
                     <h2 class="center">Login</h2>
@@ -54,7 +54,7 @@ const Login = () => {
                                 value = {password}
                                 onChange={e=>setPassword(e.target.value)}/> 
                             </div>
-                            <button class="btn-submit-fn" type="submit" class="Sign-In" onclick = "signin()" >Sign in</button>
+                            <button class="btn-submit-fn" type="submit" name="Sign-in" onclick = "signin()" >Sign in</button>
                         </form>
                         <p class="Not-Register">Don't have an account? <Link to="/Register"><u><b>   Register here!   </b></u></Link></p>
                     
