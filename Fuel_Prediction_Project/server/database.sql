@@ -14,15 +14,16 @@ CREATE TABLE Users(
 CREATE TABLE profileInfo(
     user_name varchar(255) PRIMARY KEY,
     full_name varchar(255),
-    address1 char(255),
-    address2 char(255),
-    city char(255),
-    state char(255),
-    zip int
+    address1 varchar(255),
+    address2 varchar(255),
+    city varchar(255), 
+    state varchar(255),
+    zip varchar(255)
 );
 
 CREATE TABLE fuelquote(
-    Gallons_Requested numeric(10,2) NOT NULL,
+    user_name varchar(255) PRIMARY KEY,
+    Gallons_Requested numeric(10,2),
 	Delivery_Address char(255),
 	Delivery_Date timestamp ,
 	Suggested_Price numeric(10,2),

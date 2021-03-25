@@ -1,0 +1,48 @@
+#title {
+  text-align: center;
+  margin: 50px 0px 20px 0px;
+}
+
+#input-todo {
+  width: 80%;
+  text-align: center;
+  margin-left: 10%;
+}
+
+#todo-list {
+  width: 80%;
+  text-align: center;
+  margin-left: 10%;
+}
+
+.center {
+ text-align: center
+}
+
+#state-id{
+  width: 358px;   
+ }
+
+ div{
+  margin-top: 0px
+ }
+
+ table {
+  border-collapse: collapse;
+  border: 1px solid black;
+  }
+
+  th,td {
+  border: 1px solid black;
+  }
+
+  table.a {
+  background-color: rgb(255, 255, 255);
+  table-layout: auto;
+  width: 100%;  
+  }
+
+  table.b {
+  table-layout: fixed;
+  width: 100%;  
+  }
