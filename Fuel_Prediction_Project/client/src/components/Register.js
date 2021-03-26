@@ -8,9 +8,8 @@ import "./stylesheets/style.css";
 const Register = () => {
     const [user_name, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    //const password = document.getElementById("password");
     const [confirmed_password, setCPassword] = useState("");
-    //const confirmed_password = document.getElementById("confirmed-password");
+
     
 
     const submitForm = async e  => {
