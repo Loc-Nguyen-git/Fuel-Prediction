@@ -18,7 +18,14 @@ const Login = () => {
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(body)
             });
-            window.location = "/Profile";
+            const jsonData = await response.json();
+            if (jsonData === "signing in"){
+                window.location = "/Profile";
+            }
+            else {
+                alert("Invalid user or password");
+            }
+            
         } catch (err) {
             console.error(err.message);
         }

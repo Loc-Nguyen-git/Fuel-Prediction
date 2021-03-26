@@ -8,20 +8,36 @@ import "./stylesheets/style.css";
 const Register = () => {
     const [user_name, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    //const password = document.getElementById("password");
+    const [confirmed_password, setCPassword] = useState("");
+    //const confirmed_password = document.getElementById("confirmed-password");
+    
 
     const submitForm = async e  => {
         e.preventDefault();
-        try{
-            const body = {user_name, password};
-            const response = await fetch("http://localhost:5000/register",{
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify(body)
-            });
-            window.location = "/";
-        } catch (err) {
-            console.error(err.message);
+        if (confirmed_password !== password){
+            alert("Confirm password not match");
+        } else{
+            try{                                
+                const body = {user_name, password};
+                const response = await fetch("http://localhost:5000/register",{
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify(body)
+                });
+                const jsonData = await response.json();
+                if (jsonData === "existed username"){
+                    alert("User name is in used. Pick another one");
+                    window.location = "/Register";
+                }
+                if (jsonData === "user registered"){
+                    window.location = "/";
+                }
+            } catch (err) {
+                console.error(err.message);
+            }
         }
+        
     }
 
     return (
@@ -50,12 +66,16 @@ const Register = () => {
                             onChange={e=>setUsername(e.target.value)}/>
                         </div>
                         <div class = "register-form-password">
-                            <input type="password" class="form-control" name="password" placeholder="Input Password" required="required"/> 
-                        </div>
-                        <div class = "register-form-confirm-password">
-                            <input type="password" class="form-control" name="password" placeholder="Confirm Password" required="required" 
+                            <input type="password" class="form-control" id= "password" name="password" placeholder="Input Password" required="required"
                             value = {password}
                             onChange={e=>setPassword(e.target.value)}/> 
+                            
+                        </div>
+                        <div class = "register-form-confirm-password">
+                            <input type="password" class="form-control" id= "confirmed-password" name="confirmed-password" placeholder="Confirm Password" required="required"
+                            value = {confirmed_password}
+                            onChange={e=>setCPassword(e.target.value)}/>
+                            
                         </div>
                         <div><button type="submit" class="Sign-In">Create</button></div>
                     </form>

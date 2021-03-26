@@ -15,18 +15,27 @@ app.post("/register", async(req,res) =>
       const {user_name} = req.body;
       const {password} = req.body;
 
-      const register = await pool.query("INSERT INTO Users VALUES ($1,$2)",
-      [user_name, password]);
-      console.log(register);
+      const compare_username = await pool.query("SELECT * FROM Users WHERE user_name = $1",[user_name]);
+      if (compare_username.rows.length == 0){
+        const register = await pool.query("INSERT INTO Users VALUES ($1,$2)",
+        [user_name, password]);
+        console.log(register);
+  
+        const defaultProfile = await pool.query("INSERT INTO profileInfo (user_name, full_name, address1, address2, city, state, zip) VALUES ($1, NULL, NULL, NULL, NULL, NULL, NULL)",
+        [user_name]);
+        console.log(defaultProfile);
+  
+        const defaultFuelQuote = await pool.query("INSERT INTO fuelquote (user_name, Gallons_Requested, Delivery_Address, Delivery_Date, Suggested_Price, Total_Amount) VALUES ($1, NULL, NULL, NULL, NULL, NULL)",
+        [user_name]);
+        console.log(defaultFuelQuote);
+        res.json("user registered");
+      }
+      else {
+          console.log("existed username");
+          res.json("existed username");
+      }
 
-      const defaultProfile = await pool.query("INSERT INTO profileInfo (user_name, full_name, address1, address2, city, state, zip) VALUES ($1, NULL, NULL, NULL, NULL, NULL, NULL)",
-      [user_name]);
-      console.log(defaultProfile);
-
-      const defaultFuelQuote = await pool.query("INSERT INTO fuelquote (user_name, Gallons_Requested, Delivery_Address, Delivery_Date, Suggested_Price, Total_Amount) VALUES ($1, NULL, NULL, NULL, NULL, NULL)",
-      [user_name]);
-      console.log(defaultFuelQuote);
-      res.json("user registered");
+      
 
   }catch(err){
     console.log(err.message);
@@ -40,7 +49,7 @@ app.post('/signin', async(req,res) => {
     try{
         const signIn = await pool.query("SELECT * FROM Users WHERE password = $1 AND user_name = $2",
         [password, user_name]);
-        if(signIn.rows.length === 0){
+        if(signIn.rows.length == 0){
             console.log("Invalid Credentials");
             return res.status(401).json("Invalid Credentials");
         }
