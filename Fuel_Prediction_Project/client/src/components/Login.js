@@ -20,7 +20,9 @@ const Login = () => {
             });
             const jsonData = await response.json();
             if (jsonData === "signing in"){
-                window.location = "/Profile";
+                var current_user = document.getElementById("username").value;
+                window.localStorage.setItem('username', JSON.stringify(current_user));
+                window.location = "/Dashboard";
             }
             else {
                 alert("Invalid user or password");
@@ -52,7 +54,7 @@ const Login = () => {
                     <div class="center">
                         <form class = "login-form" onSubmit={submitForm}>
                             <div class = "form-user">
-                                <input type="text" class="form-control" name="username" placeholder="Username" required="required"
+                                <input type="text" class="form-control" id= "username" name="username" placeholder="Username" required="required"
                                 value = {user_name}
                                 onChange={e=>setUsername(e.target.value)}/>
                             </div>
@@ -64,8 +66,7 @@ const Login = () => {
                             <button class="btn-submit-fn" type="submit" name="Sign-in" onclick = "signin()" >Sign in</button>
                         </form>
                         <p class="Not-Register">Don't have an account? <Link to="/Register"><u><b>   Register here!   </b></u></Link></p>
-                    
-                </div>
+                    </div>
                 </div>
                 </body>
             </html>

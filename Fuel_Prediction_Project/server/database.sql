@@ -13,12 +13,12 @@ CREATE TABLE Users(
 
 CREATE TABLE profileInfo(
     user_name varchar(255) PRIMARY KEY,
-    full_name varchar(255),
-    address1 varchar(255),
-    address2 varchar(255),
-    city varchar(255), 
-    state varchar(255),
-    zip varchar(255)
+    full_name varchar(50),
+    address1 varchar(100),
+    address2 varchar(100),
+    city varchar(100), 
+    state varchar(2),
+    zip varchar(9)
 );
 
 CREATE TABLE fuelquote(

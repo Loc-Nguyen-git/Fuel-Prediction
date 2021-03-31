@@ -2,7 +2,7 @@ import React, { Fragment, useState } from "react";
 import "./stylesheets/style.css";
 import { Link } from "react-router-dom";
 
-const Profile = ({edit}) => {
+const Profile = () => {
     
     const [full_name, setName] = useState("");
     const [address1, setAd] = useState("");
@@ -14,13 +14,17 @@ const Profile = ({edit}) => {
     const submitForm = async e  => {
         e.preventDefault();
         try{
-            const body = {full_name, address1, address2, city, state, zip};
-            const response = await fetch(`http://localhost:5000/profile/${edit.user_name}`,{
+            const user_name = JSON.parse(localStorage.getItem('username'));
+            const body = {full_name, address1, address2, city, state, zip, user_name};
+            const response = await fetch(`http://localhost:5000/profile/${user_name}`,{
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(body)
-            });
-            window.location = "/";
+            }); 
+            const jsonData = await response.json();
+            if (jsonData === "profile was updated"){
+                alert("Registered as " + user_name);
+            }
         } catch (err) {
             console.error(err.message);
         }
@@ -38,32 +42,40 @@ const Profile = ({edit}) => {
                 <h1 className="center"> Profile Management </h1>
                 <div> 
                     <div>
-                        <h2 class="center">User Information</h2>
+                        <h2 class="center"> Information</h2>
                         <div>
-                            <form class="center">
+                            <form class="profile-form" onSubmit={submitForm}>
                                 <div>
                                     <label for="full-name-id">Full Name:&nbsp;&nbsp;</label>
-                                    <input style={{width: '350px'}} id= "full-name-id" name= "full-name"type="text" class="form-control" placeholder="Full Name (maximum 50 characters, required)" maxlength= "50" required="required"/>
+                                    <input style={{width: '350px'}} id= "full-name-id" name= "full-name"type="text" class="form-control" placeholder="Full Name (maximum 50 characters, required)" maxlength= "50" required="required"
+                                    value={full_name}
+                                    onChange={e=>setName(e.target.value)}/>
                                     
                                 </div>
                                 <div>
                                     <label for="address1-id">Address #1:&nbsp;</label>
-                                    <input style={{width: '350px'}} id= "address1-id" name= "adress1" type="text" class="form-control" placeholder="Address 1 (maximum 100 characters, required)" maxlength= "100" required="required"/> 
+                                    <input style={{width: '350px'}} id= "address1-id" name= "adress1" type="text" class="form-control" placeholder="Address 1 (maximum 100 characters, required)" maxlength= "100" required="required"
+                                    value={address1}
+                                    onChange={e=>setAd(e.target.value)}/>
                                     
                                 </div>
                                 <div>
                                     <label for="address2-id">Address #2:&nbsp;</label>
-                                    <input style={{width: '350px'}} id= "address2-id" name= "adress2" type="text" class="form-control" placeholder="Address 2 (maximum 100 characters, optional)" maxlength= "100"/> 
+                                    <input style={{width: '350px'}} id= "address2-id" name= "adress2" type="text" class="form-control" placeholder="Address 2 (maximum 100 characters, optional)" maxlength= "100"
+                                    value={address2}
+                                    onChange={e=>setAdd(e.target.value)}/>
                                     
                                 </div>
                                 <div> 
                                     <label for="city-id">City:&emsp;&emsp;&emsp;&nbsp;&nbsp;</label>
-                                    <input style={{width: '350px'}} id= "city-id" name= "city" type="text" class="form-control" placeholder="City (maximum 100 characters, required)" maxlength= "100" required="required"/>
+                                    <input style={{width: '350px'}} id= "city-id" name= "city" type="text" class="form-control" placeholder="City (maximum 100 characters, required)" maxlength= "100" required="required"
+                                    value={city}
+                                    onChange={e=>setCity(e.target.value)}/>
                                     
                                 </div>
                                 <div>
                                     <label for="state-id">State:&emsp;&emsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                                    <select name="state" id="state-id">
+                                    <select name="state" id="state-id" value={state} onChange={e=>setState(e.target.value)}>
                                         <option>Select your state (required)</option>
                                         <option value="AL">Alabama</option>
                                         <option value="AK">Alaska</option>
@@ -121,7 +133,9 @@ const Profile = ({edit}) => {
                                 </div>
                                 <div>
                                     <label for="zip-id">Zipcode:&emsp;&nbsp;&nbsp;</label>
-                                    <input style={{width: '350px'}} id ="zip-id" name= "zip" type="text" class="form-control" placeholder="Zipcode (9 characters, at least 5 character code required)" pattern="[0-9]*" maxlength="9" minlength="5" size = "10" required="required"/>
+                                    <input style={{width: '350px'}} id ="zip-id" name= "zip" type="text" class="form-control" placeholder="Zipcode (9 characters, at least 5 character code required)" pattern="[0-9]*" maxlength="9" minlength="5" size = "10" required="required"
+                                    value={zip}
+                                    onChange={e=>setZip(e.target.value)}/>
                                 </div>
                                 <div><button>
                                     Submit
@@ -133,7 +147,7 @@ const Profile = ({edit}) => {
                     </div>
                 </div>
                 </div>
-            </body>
+            </body> 
         </html>
     </Fragment>);
 }

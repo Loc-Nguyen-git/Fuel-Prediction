@@ -21,7 +21,7 @@ app.post("/register", async(req,res) =>
         [user_name, password]);
         console.log(register);
   
-        const defaultProfile = await pool.query("INSERT INTO profileInfo (user_name, full_name, address1, address2, city, state, zip) VALUES ($1, NULL, NULL, NULL, NULL, NULL, NULL)",
+        const defaultProfile = await pool.query("INSERT INTO profileInfo (user_name, full_name, address1, address2, city, state, zip) VALUES ($1, ' ' , ' ', NULL, NULL, NULL, NULL)",
         [user_name]);
         console.log(defaultProfile);
   
@@ -62,10 +62,12 @@ app.post('/signin', async(req,res) => {
 
 //get profile data
 app.get('/profile/:user_name', async(req,res) => {
+    var name = req.params.user_name;
+    console.log(name);
     try{
-        const {user_name} = req.params;
-        const getProfile = await pool.query("SELECT * FROM profileInfo WHERE user_name = $1",
-        [user_name]);
+        
+        const getProfile = await pool.query("SELECT full_name, address1, address2, city, state, zip FROM profileInfo WHERE user_name = $1", [name]);
+        console.log("1");
         console.log(getProfile);
         res.json("getting profile data");
     }catch(err){
@@ -74,9 +76,9 @@ app.get('/profile/:user_name', async(req,res) => {
 })
 
 //update profile
-app.put("/profile/:user_name", async(req,res) => {
+app.post("/profile/:user_name", async(req,res) => {
     try{
-        const {user_name}=req.params;
+        var name = req.params.user_name;
         const {full_name}=req.body;
         const {address1}=req.body;
         const {address2}=req.body;
@@ -84,8 +86,7 @@ app.put("/profile/:user_name", async(req,res) => {
         const {state}=req.body;
         const {zip}=req.body;
 
-        const updateProfile = await pool.query("UPDATE profileInfo SET full_name=$1, address1=$2, address2=$3, city=$4, state=$5, zip=$6 WHERE user_name=$7"
-        ,[full_name,address1,address2,city,state,zip,user_name]);
+        const updateProfile = await pool.query("UPDATE profileInfo SET full_name=$1, address1=$2, address2=$3, city=$4, state=$5, zip=$6 WHERE user_name=$7",[full_name,address1,address2,city,state,zip,name]);
         console.log(updateProfile);
         res.json("profile was updated");
     }catch(err){
@@ -107,7 +108,7 @@ app.get('/fuelquote/:user_name', async(req,res) => {
 })
 
 //update fuelquote history
-app.put("/fuelquote/:user_name", async(req,res) => {
+app.post("/fuelquote/:user_name", async(req,res) => {
     try{
         const {user_name}=req.params;
         const {Gallons_Requested}=req.body;
