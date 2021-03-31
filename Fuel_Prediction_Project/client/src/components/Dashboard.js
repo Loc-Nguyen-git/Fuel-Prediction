@@ -1,47 +1,22 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState} from "react";
 import "./stylesheets/style.css";
 import { Link } from "react-router-dom";
 
 const Dashboard = () => {
-    
-    //const user_name = JSON.parse(localStorage.getItem('username'));
-    //const user_name = "Moderna";
-    let dashboard = []
-
-    const setUserinfo = ({data}) => {
-        dashboard = data;
-    }
-    const displayUserinfo = () => {
-        const {UserTable} = document.querySelector('#table-modifier');
-        let userHTML = " ";
-        dashboard.map(profileInfo => (
-            userHTML =
-                `<tr>
-                    <th>${profileInfo.full_name}</th>
-                    <th>${profileInfo.address1}</th>
-                    <th>${profileInfo.address2}</th>  
-                    <th>${profileInfo.city}</th> 
-                    <th>${profileInfo.state}</th> 
-                    <th>${profileInfo.zip}</th>
-                </tr>`
-        ));
-        UserTable.innerHTML = userHTML;
-    }
-    const selectUser = async e => {
-        e.preventDefault();    
+    const [dashboard, setUserinfo] = useState([]);
+    const selectUser = async e => {   
         try {
             const user_name = JSON.parse(localStorage.getItem('username'));
             const response = await fetch(`http://localhost:5000/profile/${user_name}`);
             const jsonData = await response.json();
-    
             setUserinfo(jsonData);
-            displayUserinfo();
         } catch (err) {
             console.log(err.message);
         }
     }
-    
-
+    useEffect(() =>{
+        selectUser();
+    },[]);
     
     return (
     <Fragment>
@@ -57,28 +32,40 @@ const Dashboard = () => {
                 <div> 
                     <div>
                         <h2 class="center">User Information</h2>
-                        <table className="table-users" id="user-info" styles="width: 1055px; height: 100px; margin-bottom: 100px;" onClick ={selectUser} >
+                        <table class="table-users" styles="width: 1055px; height: 100px; margin-bottom: 100px;" align = "center">
                             <thead>
-                                <tr>
-                                    <th>Full Name </th>
-                                    
-                                    <th>Address 1</th>
-                                    <th>Address 2</th>
-                                    <th>City</th>
-                                    <th>State</th>
-                                    <th>ZipCode</th>
-                                </tr>
+                            <tr>
+                                <th>Full Name </th>                                    
+                                <th>Address 1</th>
+                                <th>Address 2</th>
+                                <th>City</th>
+                                <th>State</th>
+                                <th>ZipCode</th>
+                            </tr>
                             </thead>
     
-                            <tbody id="table-modifier">
+                            <tbody>
+                                {dashboard.map(profileinfo => (
+                                    <tr>
+                                        <td>{profileinfo.full_name}</td>
+                                        <td>{profileinfo.address1}</td>
+                                        <td>{profileinfo.address2}</td>  
+                                        <td>{profileinfo.city}</td> 
+                                        <td>{profileinfo.state}</td> 
+                                        <td>{profileinfo.zip}</td>
+                                    </tr>
+                                ))}
                             </tbody>
                         </table>
-                        <div><form class="left">
+                        <div><form class="edit-profile" align = "center" >
                             <Link to="/Profile"><button>Edit</button></Link>
-                        </form></div> 
-                        <div><form class="center">
-                            <Link to="/FuelQuote"><button>Get a Quote</button></Link>
-                        </form></div>  
+                        </form></div>
+                        <div> 
+                            <div><form class="center">
+                                <Link to="/FuelQuote"><button>Get a Quote</button></Link>
+                            </form></div>
+                        </div>
+                         
 
                         
                     </div>

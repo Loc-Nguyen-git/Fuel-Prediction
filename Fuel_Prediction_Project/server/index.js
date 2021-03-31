@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const pool = require("./db");
+const bcrypt = require("bcrypt");
 
 //middleware
 app.use(cors())
@@ -17,8 +18,10 @@ app.post("/register", async(req,res) =>
 
       const compare_username = await pool.query("SELECT * FROM Users WHERE user_name = $1",[user_name]);
       if (compare_username.rows.length == 0){
+        const salt = await bcrypt.genSalt(10);
+        const bcryptPassword = await bcrypt.hash(password, salt);
         const register = await pool.query("INSERT INTO Users VALUES ($1,$2)",
-        [user_name, password]);
+        [user_name, bcryptPassword]);
         console.log(register);
   
         const defaultProfile = await pool.query("INSERT INTO profileInfo (user_name, full_name, address1, address2, city, state, zip) VALUES ($1, ' ' , ' ', NULL, NULL, NULL, NULL)",
@@ -47,9 +50,19 @@ app.post('/signin', async(req,res) => {
     const {user_name} = req.body;
     const {password} = req.body;
     try{
-        const signIn = await pool.query("SELECT * FROM Users WHERE password = $1 AND user_name = $2",
-        [password, user_name]);
-        if(signIn.rows.length == 0){
+        const signIn = await pool.query("SELECT * FROM Users WHERE user_name = $1",[user_name]);
+        console.log(signIn.rows);
+        if(signIn.rows.length === 0){
+            console.log("Invalid Credentials");
+            return res.status(401).json("Invalid Credentials");
+        }
+        const salt = await bcrypt.genSalt(10);
+        const bcryptPassword = await bcrypt.hash(password, salt);
+        console.log(bcryptPassword);
+        console.log(signIn.rows[0].password);
+        const validPassword = await bcrypt.compare(password, signIn.rows[0].password);
+        console.log(validPassword);
+        if(!validPassword){
             console.log("Invalid Credentials");
             return res.status(401).json("Invalid Credentials");
         }
@@ -69,7 +82,7 @@ app.get('/profile/:user_name', async(req,res) => {
         const getProfile = await pool.query("SELECT full_name, address1, address2, city, state, zip FROM profileInfo WHERE user_name = $1", [name]);
         console.log("1");
         console.log(getProfile);
-        res.json("getting profile data");
+        res.json(getProfile.rows);
     }catch(err){
         console.log(err.message);
     }
@@ -107,7 +120,7 @@ app.get('/fuelquote/:user_name', async(req,res) => {
     }
 })
 
-//update fuelquote history
+//update fuelquote 
 app.post("/fuelquote/:user_name", async(req,res) => {
     try{
         const {user_name}=req.params;
@@ -125,6 +138,7 @@ app.post("/fuelquote/:user_name", async(req,res) => {
         console.log(err.message);
     }
 });
+// app.get () => {} : fuelquote history
 
 app.listen(5000, ()=> {
     console.log("Server has started on port 5000")

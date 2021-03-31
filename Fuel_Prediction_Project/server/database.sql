@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS fuelquote CASCADE;
 
 CREATE TABLE Users(
     user_name varchar(255) PRIMARY KEY,
-    password char(255),
+    password varchar(255),
     email varchar(255)
 );
 
