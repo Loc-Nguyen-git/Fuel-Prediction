@@ -27,10 +27,7 @@ app.post("/register", async(req,res) =>
         const defaultProfile = await pool.query("INSERT INTO profileInfo (user_name, full_name, address1, address2, city, state, zip) VALUES ($1, ' ' , ' ', NULL, NULL, NULL, NULL)",
         [user_name]);
         console.log(defaultProfile);
-  
-        const defaultFuelQuote = await pool.query("INSERT INTO fuelquote (user_name, Gallons_Requested, Delivery_Address, Delivery_Date, Suggested_Price, Total_Amount) VALUES ($1, NULL, NULL, NULL, NULL, NULL)",
-        [user_name]);
-        console.log(defaultFuelQuote);
+
         res.json("user registered");
       }
       else {
@@ -110,11 +107,11 @@ app.post("/profile/:user_name", async(req,res) => {
 //get fuelquote history
 app.get('/fuelquote/:user_name', async(req,res) => {
     try{
-        const {user_name} = req.params;
-        const getFuelQ = await pool.query("SELECT * FROM fuelquote WHERE user_name = $1",
-        [user_name]);
+        var name = req.params.user_name;
+        const getFuelQ = await pool.query("SELECT Gallons_Requested, Delivery_Address, Delivery_Date, Suggested_Price, Total_Amount FROM fuelquote WHERE user_name = $1",
+        [name]);
         console.log(getFuelQ);
-        res.json("getting fuel quote history data");
+        res.json(getFuelQ.rows);
     }catch(err){
         console.log(err.message);
     }
@@ -123,23 +120,26 @@ app.get('/fuelquote/:user_name', async(req,res) => {
 //update fuelquote 
 app.post("/fuelquote/:user_name", async(req,res) => {
     try{
-        const {user_name}=req.params;
+        var name = req.params.user_name;
         const {Gallons_Requested}=req.body;
         const {Delivery_Address}=req.body;
         const {Delivery_Date}=req.body;
         const {Suggested_Price}=req.body;
         const {Total_Amount}=req.body; 
 	
-        const updateFuelQ = await pool.query("UPDATE fuelquote SET Gallons_Requested=$1, Delivery_Address=$2, Delivery_Date=$3, Suggested_Price=$4, Total_Amount=$5 WHERE user_name=$6"
-        ,[Gallons_Requested,Delivery_Address,Delivery_Date,Suggested_Price,Total_Amount,user_name]);
+        const updateFuelQ = await pool.query("INSERT INTO fuelquote (user_name, Gallons_Requested, Delivery_Address, Delivery_Date, Suggested_Price, Total_Amount) VALUES ($1, $2, $3, $4, $5, $6)"
+        ,[name,Gallons_Requested,Delivery_Address,Delivery_Date,Suggested_Price,Total_Amount]);
         console.log(updateFuelQ);
         res.json("data added to fuel quote history");
     }catch(err){
         console.log(err.message);
     }
 });
-// app.get () => {} : fuelquote history
+
 
 app.listen(5000, ()=> {
     console.log("Server has started on port 5000")
 });
+const defaultFuelQuote = await pool.query("INSERT INTO fuelquote (user_name, Gallons_Requested, Delivery_Address, Delivery_Date, Suggested_Price, Total_Amount) VALUES ($1, NULL, NULL, NULL, NULL, NULL)",
+        [user_name]);
+        console.log(defaultFuelQuote);

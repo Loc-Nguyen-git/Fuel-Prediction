@@ -22,7 +22,8 @@ CREATE TABLE profileInfo(
 );
 
 CREATE TABLE fuelquote(
-    user_name varchar(255) PRIMARY KEY,
+    no_quote SERIAL PRIMARY KEY,
+    user_name varchar(255),
     Gallons_Requested numeric(10,2),
 	Delivery_Address char(255),
 	Delivery_Date timestamp ,

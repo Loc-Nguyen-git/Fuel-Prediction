@@ -1,7 +1,21 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState} from "react";
 import "./stylesheets/style.css";
 
 const FuelHistory = () => {
+    const [fuelhistory, setUserinfo] = useState([]);
+    const selectUser = async e => {   
+        try {
+            const user_name = JSON.parse(localStorage.getItem('username'));
+            const response = await fetch(`http://localhost:5000/fuelquote/${user_name}`);
+            const jsonData = await response.json();
+            setUserinfo(jsonData);
+        } catch (err) {
+            console.log(err.message);
+        }
+    }
+    useEffect(() =>{
+        selectUser();
+    },[]);
     return (
     <Fragment>
         <html>
@@ -15,61 +29,27 @@ const FuelHistory = () => {
             <h1> </h1>
             <h2 class="center">Fuel Quote History of client1</h2>
             <table class="a">
+            <thead>
             <tr>
-                <th>Date of quotes</th>
+                
                 <th>Gallons Requested</th>
                 <th>Delivery Address</th>
                 <th>Delivery Date</th>
+                <th>Suggested Price</th>
                 <th>Total Amount Due (dollars)</th>
             </tr>
-
-            <tr>
-                <td>02/08/2021</td>
-                <td>10</td>
-                <td>4800 Calhoun Rd, Houston, TX 77004</td>
-                <td>02/12/2021</td>
-                <td>$1100</td>
-            </tr>
-
-            <tr>
-                <td>&nbsp </td>
-                <td>&nbsp</td>
-                <td>&nbsp</td>
-                <td>&nbsp</td>
-                <td>&nbsp</td>
-            </tr>
-
-            <tr>
-                <td>&nbsp</td>
-                <td>&nbsp</td>
-                <td>&nbsp</td>
-                <td>&nbsp</td>
-                <td>&nbsp</td>
-            </tr>
-
-            <tr>
-                <td>&nbsp</td>
-                <td>&nbsp</td>
-                <td>&nbsp</td>
-                <td>&nbsp</td>
-                <td>&nbsp</td>
-            </tr>
-
-            <tr>
-                <td>&nbsp</td>
-                <td>&nbsp</td>
-                <td>&nbsp</td>
-                <td>&nbsp</td>
-                <td>&nbsp</td>
-            </tr>
-
-            <tr>
-                <td>&nbsp</td>
-                <td>&nbsp</td>
-                <td>&nbsp</td>
-                <td>&nbsp</td>
-                <td>&nbsp</td>
-            </tr>
+            </thead>
+            <tbody>
+                {fuelhistory.map(fuelquote =>(
+                    <tr>
+                        <td>{fuelquote.Gallons_Requested}</td>
+                        <td>{fuelquote.Delivery_Address}</td>
+                        <td>{fuelquote.Delivery_Date}</td>
+                        <td>{fuelquote.Suggested_Price}</td>
+                        <td>{fuelquote.Total_Amount}</td>
+                    </tr>
+                ))}
+            </tbody>
             </table>
 
 
