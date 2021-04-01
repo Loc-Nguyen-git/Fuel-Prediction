@@ -31,8 +31,8 @@ app.post("/register", async(req,res) =>
         res.json("user registered");
       }
       else {
-          console.log("existed username");
-          res.json("existed username");
+          console.log(res.body);
+          res.json(res.body);
       }
 
       
@@ -73,13 +73,15 @@ app.post('/signin', async(req,res) => {
 //get profile data
 app.get('/profile/:user_name', async(req,res) => {
     var name = req.params.user_name;
-    console.log(name);
+    //console.log(name);
     try{
         
         const getProfile = await pool.query("SELECT full_name, address1, address2, city, state, zip FROM profileInfo WHERE user_name = $1", [name]);
+        res.body=getProfile.rows;
+        /*
         console.log("1");
-        console.log(getProfile);
-        res.json(getProfile.rows);
+        res.json(res.body);
+        console.log(res.body);*/
     }catch(err){
         console.log(err.message);
     }
@@ -137,7 +139,7 @@ app.post("/fuelquote/:user_name", async(req,res) => {
 });
 
 
-app.listen(5000, ()=> {
+module.exports = app.listen(5000, ()=> {
     console.log("Server has started on port 5000")
 });
 //const defaultFuelQuote = await pool.query("INSERT INTO fuelquote (user_name, Gallons_Requested, Delivery_Address, Delivery_Date, Suggested_Price, Total_Amount) VALUES ($1, NULL, NULL, NULL, NULL, NULL)",
