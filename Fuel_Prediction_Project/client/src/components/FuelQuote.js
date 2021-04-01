@@ -75,6 +75,9 @@ const FuelQuote = () => {
             <div>
                 <Link to="/FuelHistory"><button type="submit" class="view-quotes">View All Quotes</button></Link>
             </div>
+            <div>
+                <Link to="/Dashboard"><button type="submit" class="view-quotes">Back to Dashboard</button></Link>
+            </div>
 
         </body>
         </html>

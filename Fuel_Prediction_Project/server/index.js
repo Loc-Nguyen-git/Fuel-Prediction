@@ -140,6 +140,6 @@ app.post("/fuelquote/:user_name", async(req,res) => {
 app.listen(5000, ()=> {
     console.log("Server has started on port 5000")
 });
-const defaultFuelQuote = await pool.query("INSERT INTO fuelquote (user_name, Gallons_Requested, Delivery_Address, Delivery_Date, Suggested_Price, Total_Amount) VALUES ($1, NULL, NULL, NULL, NULL, NULL)",
-        [user_name]);
-        console.log(defaultFuelQuote);
+//const defaultFuelQuote = await pool.query("INSERT INTO fuelquote (user_name, Gallons_Requested, Delivery_Address, Delivery_Date, Suggested_Price, Total_Amount) VALUES ($1, NULL, NULL, NULL, NULL, NULL)",
+//        [user_name]);
+//        console.log(defaultFuelQuote);

@@ -28,11 +28,12 @@ const Dashboard = () => {
                 <link rel="stylesheet" href="stylesheets/style.css" />
             </head>
             <body>
-                <h1 className="center"> Profile Management </h1>
+                <h1 className="center"> Dashboard </h1>
                 <div> 
                     <div>
                         <h2 class="center">User Information</h2>
-                        <table class="table-users" styles="width: 1055px; height: 100px; margin-bottom: 100px;" align = "center">
+                        <div align="center">
+                        <table styles="width: 1055px; height: 100px; margin-bottom: 100px;" class="center">
                             <thead>
                             <tr>
                                 <th>Full Name </th>                                    
@@ -56,18 +57,26 @@ const Dashboard = () => {
                                     </tr>
                                 ))}
                             </tbody>
-                        </table>
+                        </table></div>
                         <div><form class="edit-profile" align = "center" >
-                            <Link to="/Profile"><button>Edit</button></Link>
+                            <Link to="/Profile"><button>Edit Profile Information</button></Link>
                         </form></div>
                         <div> 
-                            <div><form class="center">
+                            <div>
+                            <form class="center">
                                 <Link to="/FuelQuote"><button>Get a Quote</button></Link>
+                            </form>
+                            </div>
+                            <div>
+                            <form class="center">
+                                <Link to="/FuelHistory"><button type="submit" class="view-quotes">View All Quotes</button></Link>
                             </form></div>
-                        </div>
-                         
-
-                        
+                            <div>
+                            <form class="center">
+                                <Link to="/"><button>Log Out</button></Link>
+                            </form>
+                            </div>
+                        </div>                        
                     </div>
                 </div>
             </body> 

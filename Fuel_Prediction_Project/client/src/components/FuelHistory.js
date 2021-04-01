@@ -5,6 +5,7 @@ const FuelHistory = () => {
     const [fuelhistory, setUserinfo] = useState([]);
     const selectUser = async e => {   
         try {
+            document.getElementById("username").innerHTML = user_name;
             const user_name = JSON.parse(localStorage.getItem('username'));
             const response = await fetch(`http://localhost:5000/fuelquote/${user_name}`);
             const jsonData = await response.json();
@@ -27,7 +28,7 @@ const FuelHistory = () => {
             </head>
             <body>
             <h1> </h1>
-            <h2 class="center">Fuel Quote History of client1</h2>
+            <h2 class="center">Fuel Quote History</h2>
             <table class="a">
             <thead>
             <tr>

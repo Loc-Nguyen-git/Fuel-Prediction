@@ -42,9 +42,9 @@ const Profile = () => {
                 <h1 className="center"> Profile Management </h1>
                 <div> 
                     <div>
-                        <h2 class="center"> Information</h2>
+                        <h2 class="center"> Edit Information Here</h2>
                         <div>
-                            <form class="profile-form" onSubmit={submitForm}>
+                            <form class="profile-form" align="center" onSubmit={submitForm}>
                                 <div>
                                     <label for="full-name-id">Full Name:&nbsp;&nbsp;</label>
                                     <input style={{width: '350px'}} id= "full-name-id" name= "full-name"type="text" class="form-control" placeholder="Full Name (maximum 50 characters, required)" maxlength= "50" required="required"
@@ -141,8 +141,12 @@ const Profile = () => {
                                     Submit
                                 </button></div>
                             </form>
+                            
                             <div><form class="center">
                             <Link to="/FuelQuote"><button>Get a Quote</button></Link>
+                            <div>
+                            <Link to="/Dashboard"><button type="submit" class="view-quotes">Back to Dashboard</button></Link>
+                            </div>
                             </form></div>      
                     </div>
                 </div>
