@@ -5,7 +5,6 @@ const FuelHistory = () => {
     const [fuelhistory, setUserinfo] = useState([]);
     const selectUser = async e => {   
         try {
-            document.getElementById("username").innerHTML = user_name;
             const user_name = JSON.parse(localStorage.getItem('username'));
             const response = await fetch(`http://localhost:5000/fuelquote/${user_name}`);
             const jsonData = await response.json();
@@ -17,42 +16,46 @@ const FuelHistory = () => {
     useEffect(() =>{
         selectUser();
     },[]);
+
     return (
     <Fragment>
         <html>
             <head>
-                <meta charset="UTF-8"/>
+                <meta charSet="UTF-8"/>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
                 <title> Fuel Quote Project- History</title>
                 <link rel="stylesheet" href="stylesheets/style.css" />
             </head>
             <body>
-            <h1> </h1>
-            <h2 class="center">Fuel Quote History</h2>
-            <table class="a">
-            <thead>
-            <tr>
-                
-                <th>Gallons Requested</th>
-                <th>Delivery Address</th>
-                <th>Delivery Date</th>
-                <th>Suggested Price</th>
-                <th>Total Amount Due (dollars)</th>
-            </tr>
-            </thead>
-            <tbody>
-                {fuelhistory.map(fuelquote =>(
-                    <tr>
-                        <td>{fuelquote.Gallons_Requested}</td>
-                        <td>{fuelquote.Delivery_Address}</td>
-                        <td>{fuelquote.Delivery_Date}</td>
-                        <td>{fuelquote.Suggested_Price}</td>
-                        <td>{fuelquote.Total_Amount}</td>
-                    </tr>
-                ))}
-            </tbody>
-            </table>
-
+                <h1> </h1>
+                <div>
+                    <div>
+                        <h2 class="center">Fuel Quote History</h2>
+                        <div align="center">
+                        <table>
+                            <thead>
+                            <tr>                
+                                <th>Gallons Requested</th>
+                                <th>Delivery Address</th>
+                                <th>Delivery Date</th>
+                                <th>Suggested Price</th>
+                                <th>Total Amount Due (dollars)</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {fuelhistory.map(fuelquote =>(
+                                    <tr>
+                                        <td>{fuelquote.Gallons_Requested}</td>
+                                        <td>{fuelquote.Delivery_Address}</td>
+                                        <td>{fuelquote.Delivery_Date}</td>
+                                        <td>{fuelquote.Suggested_Price}</td>
+                                        <td>{fuelquote.Total_Amount}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table></div>
+                    </div>
+                </div>
 
             </body>
         </html>

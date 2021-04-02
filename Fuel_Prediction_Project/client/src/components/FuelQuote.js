@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import "./stylesheets/style.css";
 import { Link } from "react-router-dom";
 
@@ -7,8 +7,71 @@ const FuelQuote = () => {
     const [DAddress, setDAddress] = useState("");
     const [DDate, setDDate] = useState("");
     const [Price, setPrice] = useState("");
-    const [Total, setTotal] = useState(""); 
-
+    const [Total, setTotal] = useState("");
+    //const user_name = JSON.parse(localStorage.getItem('username')); 
+    var isTX = 5;
+    var Suggested=0;
+    var totaltest=0;
+    const getaddress = async e => {
+        try{
+            const user_name = JSON.parse(localStorage.getItem('username')); 
+            const response = await fetch(`http://localhost:5000/fuelquote_address/${user_name}`);
+            const jsonData = await response.json();
+            setDAddress(jsonData);
+            if (jsonData.contains("TX")) {
+                isTX = 1;
+                alert("instate");
+            } else {
+                isTX = 0;
+                alert("outof state");
+            }
+            if(isTX !== 5){
+                alert("no change");
+            }
+        } catch (err) {
+            console.log(err.message);
+        }
+    }
+    useEffect(() =>{
+        getaddress();
+    });
+    
+    //get suggested price
+    const getPrice = async e => {
+        try{
+            var LocFac;
+            var GalFactor;
+            var RateFactor;
+            var ComProfit = 10/100;
+            if (gallon > 1000){
+                GalFactor = 2/100;
+            } else {
+                GalFactor = 3/100;
+            }
+            if (isTX === 1) {
+                LocFac = 2/100;
+            }else {
+                LocFac = 4/100;
+            }
+            const user_name = JSON.parse(localStorage.getItem('username')); 
+            const response = await fetch(`http://localhost:5000/fuelquote_price/${user_name}`);
+            const jsonData = await response.json();
+            if (jsonData === "No History"){
+                RateFactor = 1/100;
+            }else {
+                RateFactor = 0;
+            }
+            Suggested = 1.5 + 1.5*(LocFac - RateFactor + GalFactor + ComProfit);
+            totaltest = gallon * Suggested;
+            setPrice(Suggested);
+            setTotal(totaltest);
+        } catch (err) {
+            console.log(err.message);
+        }
+    }
+    useEffect(() =>{
+        getPrice();
+    });
     
 
     const submitForm = async e  => {
@@ -48,29 +111,36 @@ const FuelQuote = () => {
             <form onSubmit = {submitForm}>
                 <div>
                     <label for = "gal-id"> Gallons Requested: &emsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                    <input type= "number" id = "gal-id" name= "gallon" placeholder="Number of Gallons" style={{width: '350px'}}/>
+                    <input type= "number" id = "gal-id" name= "gallon" placeholder="Number of Gallons" style={{width: '350px'}}
+                    value={gallon}
+                    onChange={e=>setGal(e.target.value)}/>
 
                 </div>
 
                 <div> 
                     <label for = "delivery-id"> Delivery Address: &emsp;&emsp;&nbsp;&nbsp;&nbsp;</label>
-                    <input type="text" id= "delivery-id" name= "delivery" placeholder="This address will later do in JS(get-method)" style={{width: '350px'}}/>
+                    <input type="text" id= "delivery-id" name= "delivery" placeholder= {DAddress} style={{width: '350px'}} readOnly/>
                 </div>
 
                 <div>
                     <label for= "delivered-date-id"> Delivery Date: &emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                        <input type="date" name="delivered-date" required= "required" style={{width: '353px'}}/>
+                        <input type="date" name="delivered-date" required= "required" style={{width: '353px'}}
+                        value={DDate}
+                        onChange={e=>setDDate(e.target.value)}/>
                 </div>
 
                 <div> 
                     <label for= "suggested-price-id"> Suggested Price/Gallon: </label>
-                    <input type="number" id= "suggested-price-id" name= "price" placeholder="This price will later do in JS(get-method)" style={{width: '350px'}}/>
+                    <input type="number" id= "suggested-price-id" name= "price" placeholder={Price} style={{width: '350px'}} readOnly/>
                 </div>
 
                 <div> 
                     <label for= "total-id"> Total Amount: &emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                    <input type="number" id= "total-id" name= "total" placeholder="This price will later do in JS(get-method)" style={{width: '350px'}}/>
+                    <input type="number" id= "total-id" name= "total" placeholder={Total} style={{width: '350px'}} readOnly/>
                 </div>
+                <div><button>
+                    Submit Quote
+                </button></div>
             </form>
             <div>
                 <Link to="/FuelHistory"><button type="submit" class="view-quotes">View All Quotes</button></Link>
