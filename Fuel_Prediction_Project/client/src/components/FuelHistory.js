@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState} from "react";
 import "./stylesheets/style.css";
+import { Link } from "react-router-dom";
 
 const FuelHistory = () => {
     const [fuelhistory, setUserinfo] = useState([]);
@@ -54,6 +55,11 @@ const FuelHistory = () => {
                                 ))}
                             </tbody>
                         </table></div>
+                        
+                        <form class="center">
+                            <div><Link to="/FuelQuote"><button>Get a Quote</button></Link></div>
+                            <div><Link to="/Dashboard"><button>Dashboard</button></Link></div>
+                        </form>
                     </div>
                 </div>
 
