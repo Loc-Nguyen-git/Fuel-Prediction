@@ -18,7 +18,8 @@ app.post("/register", async(req,res) =>
 
       const compare_username = await pool.query("SELECT * FROM Users WHERE user_name = $1",[user_name]);
       if (compare_username.rows.length == 0){
-        const salt = await bcrypt.genSalt(10);
+        const saltRound = 10;
+        const salt = await bcrypt.genSalt(saltRound);
         const bcryptPassword = await bcrypt.hash(password, salt);
         const register = await pool.query("INSERT INTO Users VALUES ($1,$2)",
         [user_name, bcryptPassword]);
@@ -53,10 +54,10 @@ app.post('/signin', async(req,res) => {
             console.log("Invalid Credentials");
             return res.status(401).json("Invalid Credentials");
         }
-        const salt = await bcrypt.genSalt(10);
+        /*const salt = await bcrypt.genSalt(10);
         const bcryptPassword = await bcrypt.hash(password, salt);
         console.log(bcryptPassword);
-        console.log(signIn.rows[0].password);
+        console.log(signIn.rows[0].password);*/
         const validPassword = await bcrypt.compare(password, signIn.rows[0].password);
         console.log(validPassword);
         if(!validPassword){
