@@ -62,7 +62,6 @@ const FuelHistory = () => {
                         </form>
                     </div>
                 </div>
-
             </body>
         </html>
     </Fragment>);

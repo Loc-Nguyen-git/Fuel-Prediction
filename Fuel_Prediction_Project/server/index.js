@@ -140,7 +140,7 @@ app.get('/fuelquote_price/:user_name', async(req,res) => {
 })
 
 //get fuelquote history
-app.get('/fuelquote/:user_name', async(req,res) => {
+app.get("/fuelquote/:user_name", async(req,res) => {
     var name = req.params.user_name;
     try{
         
@@ -157,11 +157,11 @@ app.get('/fuelquote/:user_name', async(req,res) => {
 app.post("/fuelquote/:user_name", async(req,res) => {
     try{
         var name = req.params.user_name;
-        const {Gallons_Requested}=req.body.gallon;
-        const {Delivery_Address}=req.body.DAddress;
-        const {Delivery_Date}=req.body.DDate;
-        const {Suggested_Price}=req.body.Price;
-        const {Total_Amount}=req.body.Total;
+        const {Gallons_Requested}=req.body;
+        const {Delivery_Address}=req.body;
+        const {Delivery_Date}=req.body;
+        const {Suggested_Price}=req.body;
+        const {Total_Amount}=req.body;
         console.log(Gallons_Requested); 
 	
         const updateFuelQ = await pool.query("INSERT INTO fuelquote (user_name, Gallons_Requested, Delivery_Address, Delivery_Date, Suggested_Price, Total_Amount) VALUES ($1, $2, $3, $4, $5, $6)"
