@@ -3,10 +3,12 @@ const app = express();
 const cors = require("cors");
 const pool = require("./db");
 const bcrypt = require("bcrypt");
+const bodyParser = require('body-parser');
 
 //middleware
 app.use(cors())
 app.use(express.json());
+app.use(bodyParser.json());
 
 //routes
 //registers user
@@ -41,7 +43,7 @@ app.post("/register", async(req,res) =>
   }catch(err){
     console.log(err.message);
   }
-})
+});
 
 //sign in
 app.post('/signin', async(req,res) => {
@@ -69,7 +71,7 @@ app.post('/signin', async(req,res) => {
     }catch(err){
         console.log(err.message);
     }
-})
+});
 
 //get profile data
 app.get('/profile/:user_name', async(req,res) => {
@@ -78,7 +80,7 @@ app.get('/profile/:user_name', async(req,res) => {
     try{
         
         const getProfile = await pool.query("SELECT full_name, address1, address2, city, state, zip FROM profileInfo WHERE user_name = $1", [name]);
-        console.log(getProfile);
+        console.log(getProfile.rows[0].full_name);
         res.json(getProfile.rows);
         //res.body=getProfile.rows;
         /*
@@ -88,7 +90,7 @@ app.get('/profile/:user_name', async(req,res) => {
     }catch(err){
         console.log(err.message);
     }
-})
+});
 
 //update profile
 app.post("/profile/:user_name", async(req,res) => {
@@ -100,7 +102,7 @@ app.post("/profile/:user_name", async(req,res) => {
         const {city}=req.body;
         const {state}=req.body;
         const {zip}=req.body;
-
+        console.log(full_name,address1,city,state);
         const updateProfile = await pool.query("UPDATE profileInfo SET full_name=$1, address1=$2, address2=$3, city=$4, state=$5, zip=$6 WHERE user_name=$7",[full_name,address1,address2,city,state,zip,name]);
         console.log(updateProfile);
         res.json("profile was updated");
@@ -109,8 +111,27 @@ app.post("/profile/:user_name", async(req,res) => {
     }
 });
 
+//update fuelquote 
+app.post('/fuelquote/:user_name', async(req,res) => {
+    try{
+        var name = req.params.user_name;
+        const {gallon}=req.body;
+        const {DAddress}=req.body;
+        const {DDate}=req.body;
+        const {Price}=req.body;
+        const {Total}=req.body;
+        console.log(name,gallon,DAddress,DDate,Price,Total);
+	
+        const updateFuelQ = await pool.query("INSERT INTO fuelquote (user_name, Gallons_Requested, Delivery_Address, Delivery_Date, Suggested_Price, Total_Amount) VALUES ($1, $2, $3, $4, $5, $6)"
+        ,[name,gallon,DAddress,DDate,Price,Total]);
+        console.log(updateFuelQ);
+        res.json("data added to fuel quote history");
+    }catch(err){
+        console.log(err.message);
+    }
+});
 // get address of the user to put in delivery address
-app.get('/fuelquote_address/:user_name', async(req,res) => {
+app.get("/fuelquote_address/:user_name", async(req,res) => {
     try{
         var name = req.params.user_name;
         const getAddress = await pool.query("SELECT address1, address2, city, state, zip FROM profileinfo WHERE user_name = $1",
@@ -120,14 +141,14 @@ app.get('/fuelquote_address/:user_name', async(req,res) => {
     }catch(err){
         console.log(err.message);
     }
-})
+});
+
 
 // get Price of the quote to put in Suggested_Price
 app.get('/fuelquote_price/:user_name', async(req,res) => {
     try{
         var name = req.params.user_name;
-        const getHistory = await pool.query("SELECT * FROM fuelquote WHERE user_name = $1",
-        [name]);
+        const getHistory = await pool.query("SELECT * FROM fuelquote WHERE user_name = $1",[name]);
         if (getHistory.rows.length === 0){
             res.json("No History");
         }else {
@@ -137,41 +158,22 @@ app.get('/fuelquote_price/:user_name', async(req,res) => {
     }catch(err){
         console.log(err.message);
     }
-})
+});
 
 //get fuelquote history
-app.get("/fuelquote/:user_name", async(req,res) => {
+app.get('/fuelquote-history/:user_name', async(req,res) => {
     var name = req.params.user_name;
     try{
         
         const getFuelQ = await pool.query("SELECT Gallons_Requested, Delivery_Address, Delivery_Date, Suggested_Price, Total_Amount FROM fuelquote WHERE user_name = $1",
         [name]);
-        console.log(getFuelQ);
+        console.log(getFuelQ.rows[1].Delivery_Address);
         res.json(getFuelQ.rows);
     }catch(err){
         console.log(err.message);
     }
-})
-
-//update fuelquote 
-app.post("/fuelquote/:user_name", async(req,res) => {
-    try{
-        var name = req.params.user_name;
-        const {Gallons_Requested}=req.body;
-        const {Delivery_Address}=req.body;
-        const {Delivery_Date}=req.body;
-        const {Suggested_Price}=req.body;
-        const {Total_Amount}=req.body;
-        console.log(Gallons_Requested); 
-	
-        const updateFuelQ = await pool.query("INSERT INTO fuelquote (user_name, Gallons_Requested, Delivery_Address, Delivery_Date, Suggested_Price, Total_Amount) VALUES ($1, $2, $3, $4, $5, $6)"
-        ,[name,Gallons_Requested,Delivery_Address,Delivery_Date,Suggested_Price,Total_Amount]);
-        console.log(updateFuelQ);
-        res.json("data added to fuel quote history");
-    }catch(err){
-        console.log(err.message);
-    }
 });
+
 
 
 module.exports = app.listen(5000, ()=> {

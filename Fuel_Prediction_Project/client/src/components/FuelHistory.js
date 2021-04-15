@@ -7,7 +7,7 @@ const FuelHistory = () => {
     const selectUser = async e => {   
         try {
             const user_name = JSON.parse(localStorage.getItem('username'));
-            const response = await fetch(`http://localhost:5000/fuelquote/${user_name}`);
+            const response = await fetch(`http://localhost:5000/fuelquote-history/${user_name}`);
             const jsonData = await response.json();
             setUserinfo(jsonData);
         } catch (err) {
@@ -22,7 +22,7 @@ const FuelHistory = () => {
     <Fragment>
         <html>
             <head>
-                <meta charSet="UTF-8"/>
+                <meta charset="UTF-8"/>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
                 <title> Fuel Quote Project- History</title>
                 <link rel="stylesheet" href="stylesheets/style.css" />
@@ -33,7 +33,7 @@ const FuelHistory = () => {
                     <div>
                         <h2 class="center">Fuel Quote History</h2>
                         <div align="center">
-                        <table>
+                        <table styles="width: 1055px; height: 100px; margin-bottom: 100px;" class="center">
                             <thead>
                             <tr>                
                                 <th>Gallons Requested</th>
@@ -43,6 +43,7 @@ const FuelHistory = () => {
                                 <th>Total Amount Due (dollars)</th>
                             </tr>
                             </thead>
+
                             <tbody>
                                 {fuelhistory.map(fuelquote =>(
                                     <tr>
@@ -64,7 +65,7 @@ const FuelHistory = () => {
                 </div>
             </body>
         </html>
-    </Fragment>);
-}
+    </Fragment>)};
+
 
 export default FuelHistory;
