@@ -72,7 +72,18 @@ app.post('/signin', async(req,res) => {
         console.log(err.message);
     }
 });
-
+//get fuelquote history
+app.get('/fuelquote-history/:user_name', async(req,res) => {
+    var name = req.params.user_name;
+    console.log(name);
+    try{        
+        const getFuelQ = await pool.query("SELECT gallons_requested, delivery_address, delivery_date, suggested_price, total_amount FROM fuelquote WHERE user_name = $1", [name]);
+        console.log(getFuelQ.rows[0].gallons_requested);
+        res.json(getFuelQ.rows);
+    }catch(err){
+        console.log(err.message);
+    }
+});
 //get profile data
 app.get('/profile/:user_name', async(req,res) => {
     var name = req.params.user_name;
@@ -159,22 +170,6 @@ app.get('/fuelquote_price/:user_name', async(req,res) => {
         console.log(err.message);
     }
 });
-
-//get fuelquote history
-app.get('/fuelquote-history/:user_name', async(req,res) => {
-    var name = req.params.user_name;
-    try{
-        
-        const getFuelQ = await pool.query("SELECT Gallons_Requested, Delivery_Address, Delivery_Date, Suggested_Price, Total_Amount FROM fuelquote WHERE user_name = $1",
-        [name]);
-        console.log(getFuelQ.rows[1].Delivery_Address);
-        res.json(getFuelQ.rows);
-    }catch(err){
-        console.log(err.message);
-    }
-});
-
-
 
 module.exports = app.listen(5000, ()=> {
     console.log("Server has started on port 5000")

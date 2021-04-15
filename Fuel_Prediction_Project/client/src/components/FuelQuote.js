@@ -141,14 +141,14 @@ const Quote = () => {
 
                     <div> 
                         <label for= "suggested-price-id"> Suggested Price/Gallon: </label>
-                        <input type="number" id= "suggested-price-id" name= "price" placeholder={Price} style={{width: '350px'}} class="form-control"
+                        <input type="number" id= "suggested-price-id" name= "price" placeholder={Price} style={{width: '350px'}} class="form-control" readOnly
                         value={Price}
                         onChange={e=>setPrice(e.target.value)}/>
                     </div>
 
                     <div> 
                         <label for= "total-id"> Total Amount: &emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                        <input type="number" id= "total-id" name= "total" placeholder={Total} style={{width: '350px'}} class="form-control"
+                        <input type="number" id= "total-id" name= "total" placeholder={Total} style={{width: '350px'}} class="form-control" readOnly
                         value={Total}
                         onChange={e=>setTotal(e.target.value)}/>
                     </div>

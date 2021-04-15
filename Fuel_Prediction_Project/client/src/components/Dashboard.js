@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect, useState} from "react";
+import background from "./images/theme.jpg";
 import "./stylesheets/style.css";
 import { Link } from "react-router-dom";
 
@@ -20,6 +21,11 @@ const Dashboard = () => {
     
     return (
     <Fragment>
+        <div style ={{
+            backgroundImage: `url(${background})`,
+            backgroundRepeat: "no-repeat",
+            height: "955px"
+        }}>
         <html>
             <head>
                 <meta charSet="UTF-8"/>
@@ -81,6 +87,7 @@ const Dashboard = () => {
                 </div>
             </body> 
         </html>
+        </div>
     </Fragment>);
 }
 

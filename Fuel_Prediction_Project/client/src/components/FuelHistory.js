@@ -1,25 +1,31 @@
-import React, { Fragment, useEffect, useState} from "react";
+import React, { Fragment, useState, useEffect} from "react";
+import background from "./images/theme.jpg";
 import "./stylesheets/style.css";
 import { Link } from "react-router-dom";
 
-const FuelHistory = () => {
-    const [fuelhistory, setUserinfo] = useState([]);
-    const selectUser = async e => {   
+const History = () => {
+    const [history, setUsers] = useState([]);
+    const selectQuote = async e => {   
         try {
             const user_name = JSON.parse(localStorage.getItem('username'));
             const response = await fetch(`http://localhost:5000/fuelquote-history/${user_name}`);
             const jsonData = await response.json();
-            setUserinfo(jsonData);
+            setUsers(jsonData);
         } catch (err) {
             console.log(err.message);
         }
     }
     useEffect(() =>{
-        selectUser();
+        selectQuote();
     },[]);
 
     return (
     <Fragment>
+        <div style ={{
+            backgroundImage: `url(${background})`,
+            backgroundRepeat: "no-repeat",
+            height: "955px"
+        }}>
         <html>
             <head>
                 <meta charset="UTF-8"/>
@@ -45,14 +51,14 @@ const FuelHistory = () => {
                             </thead>
 
                             <tbody>
-                                {fuelhistory.map(fuelquote =>(
-                                    <tr>
-                                        <td>{fuelquote.Gallons_Requested}</td>
-                                        <td>{fuelquote.Delivery_Address}</td>
-                                        <td>{fuelquote.Delivery_Date}</td>
-                                        <td>{fuelquote.Suggested_Price}</td>
-                                        <td>{fuelquote.Total_Amount}</td>
-                                    </tr>
+                                {history.map(fuelquote =>(
+                                <tr>
+                                    <td>{fuelquote.gallons_requested}</td>
+                                    <td>{fuelquote.delivery_address}</td>
+                                    <td>{fuelquote.delivery_date}</td>
+                                    <td>{fuelquote.suggested_price}</td>
+                                    <td>{fuelquote.total_amount}</td>
+                                </tr>
                                 ))}
                             </tbody>
                         </table></div>
@@ -65,7 +71,8 @@ const FuelHistory = () => {
                 </div>
             </body>
         </html>
-    </Fragment>)};
+        </div>
+    </Fragment>);
 
-
-export default FuelHistory;
+}
+export default History;

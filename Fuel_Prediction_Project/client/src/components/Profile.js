@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from "react";
+import background from "./images/theme.jpg";
 import "./stylesheets/style.css";
 import { Link } from "react-router-dom";
 
@@ -31,6 +32,11 @@ const Profile = () => {
     }
     return (
     <Fragment>
+        <div style ={{
+            backgroundImage: `url(${background})`,
+            backgroundRepeat: "no-repeat",
+            height: "955px"
+        }}>
         <html>
             <head>
                 <meta charset="UTF-8"/>
@@ -153,6 +159,7 @@ const Profile = () => {
                 </div>
             </body> 
         </html>
+        </div>
     </Fragment>);
 }
 
