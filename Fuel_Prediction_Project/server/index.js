@@ -17,6 +17,7 @@ app.post("/register", async(req,res) =>
   try{
       const {user_name} = req.body;
       const {password} = req.body;
+      console.log(user_name);
 
       const compare_username = await pool.query("SELECT * FROM Users WHERE user_name = $1",[user_name]);
       if (compare_username.rows.length == 0){
@@ -34,8 +35,7 @@ app.post("/register", async(req,res) =>
         res.json("user registered");
       }
       else {
-          console.log(res.body);
-          res.json(res.body);
+        res.json("existed username")
       }
 
       

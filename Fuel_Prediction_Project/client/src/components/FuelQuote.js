@@ -1,10 +1,10 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect} from "react";
 import background from "./images/theme.jpg";
 import "./stylesheets/style.css";
 import { Link } from "react-router-dom";
 
 const Quote = () => {
-    const [gallon, setGal] = useState("");
+    const [gallon, setGal] = useState();
     const [DAddress, setDAddress] = useState("");
     const [DDate, setDDate] = useState("");
     const [Price, setPrice] = useState("");
@@ -19,15 +19,10 @@ const Quote = () => {
             const response = await fetch(`http://localhost:5000/fuelquote_address/${user_name}`);
             const jsonData = await response.json();
             setDAddress(jsonData);
-            if (jsonData.contains('TX')) {
+            if (jsonData.includes("TX")) {
                 isTX = 1;
-                alert("instate");
             } else {
                 isTX = 0;
-                alert("outof state");
-            }
-            if(isTX !== 5){
-                alert("no change");
             }
         } catch (err) {
             console.log(err.message);
@@ -57,10 +52,12 @@ const Quote = () => {
             const user_name = JSON.parse(localStorage.getItem('username')); 
             const response = await fetch(`http://localhost:5000/fuelquote_price/${user_name}`);
             const jsonData = await response.json();
-            if (jsonData === "No History"){
-                RateFactor = 1/100;
-            }else {
+            if (jsonData === "No History")
+            {
                 RateFactor = 0;
+            }else {
+
+                RateFactor = 1/100;
             }
             Suggested = 1.5 + 1.5*(LocFac - RateFactor + GalFactor + ComProfit);
             totaltest = gallon * Suggested;
@@ -119,7 +116,7 @@ const Quote = () => {
                 <form class="fuelquote-form" align="center" onSubmit = {submitForm}>
                     <div>
                         <label for = "gal-id"> Gallons Requested: &emsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                        <input type= "number" id = "gal-id" name= "gallon" placeholder="Number of Gallons" style={{width: '350px'}} class="form-control"
+                        <input type= "number" id = "gal-id" name= "gallon" placeholder="Number of Gallons" style={{width: '350px'}} class="form-control" required
                         value={gallon}
                         onChange={e=>setGal(e.target.value)}/>
 
@@ -152,6 +149,7 @@ const Quote = () => {
                         value={Total}
                         onChange={e=>setTotal(e.target.value)}/>
                     </div>
+
                     <div><button> Submit Quote</button></div>
                 </form>
                 <div>

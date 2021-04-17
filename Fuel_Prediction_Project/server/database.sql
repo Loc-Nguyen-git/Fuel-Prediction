@@ -7,8 +7,7 @@ DROP TABLE IF EXISTS fuelquote CASCADE;
 
 CREATE TABLE Users(
     user_name varchar(255) PRIMARY KEY,
-    password varchar(255),
-    email varchar(255)
+    password varchar(255)
 );
 
 CREATE TABLE profileInfo(
@@ -24,11 +23,11 @@ CREATE TABLE profileInfo(
 CREATE TABLE fuelquote(
     no_quote SERIAL PRIMARY KEY,
     user_name varchar(255),
-    Gallons_Requested numeric(10,2),
+    Gallons_Requested numeric(100000,3),
 	Delivery_Address char(255),
 	Delivery_Date timestamp ,
-	Suggested_Price numeric(10,2),
-	Total_Amount numeric(10,2)
+	Suggested_Price numeric(10,3),
+	Total_Amount numeric(100000,3)
 );
 
 /*INSERT INTO Users VALUES ('Moderna','cosc','cosc4354@gmail.com');
