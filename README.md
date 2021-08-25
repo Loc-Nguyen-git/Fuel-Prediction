@@ -1,2 +1,2 @@
 Make sure you have
-PostgreSQL(database), Node.JS(backend) installed
+PostgreSQL, Node.JS installed
